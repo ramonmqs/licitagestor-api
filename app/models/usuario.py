@@ -17,7 +17,7 @@ class Usuario(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
-    nome: Mapped[str] = mapped_column(String(120))
+    nome: Mapped[str] = mapped_column(String(120), unique=True)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     senha_hash: Mapped[str] = mapped_column(String(255))
     perfil: Mapped[Perfil] = mapped_column(
