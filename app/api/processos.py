@@ -50,6 +50,22 @@ def listar_acompanhamento(
         .all()
     )
 
+@router.get("/agenda", response_model=list[ProcessoRead])
+def listar_agenda(
+    usuario: Usuario = Depends(get_current_admin), db: Session = Depends(get_db)
+):
+    status_com_retorno = {
+        StatusProcesso.SUSPENSO,
+        StatusProcesso.ADIADO,
+        StatusProcesso.EM_DILIGENCIA,
+    }
+    return (
+        db.query(ProcessoLicitatorio)
+        .filter(ProcessoLicitatorio.status.in_(status_com_retorno))
+        .order_by(ProcessoLicitatorio.data_hora_retorno.asc())
+        .all()
+    )
+
 
 @router.post("/{processo_id}/confirmar-participacao", response_model=ProcessoRead)
 def confirmar_participacao(
