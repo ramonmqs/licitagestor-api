@@ -8,10 +8,12 @@ from app.core.config import settings
 from app.db.session import get_db
 from app.models.usuario import Usuario
 from app.api.processos import router as processos_router
+from app.api.arquivos import router as arquivos_router
 
 app = FastAPI(title="LicitaGestor API")
 app.include_router(auth_router)
 app.include_router(processos_router)
+app.include_router(arquivos_router)
 
 
 @app.get("/")
